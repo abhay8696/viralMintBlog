@@ -1,6 +1,7 @@
 const { User } = require("../models/user.model");
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
+const { generateAuthTokens } = require("./token.service");
 
 /**
  * Create a new user
@@ -20,7 +21,11 @@ const createUser = async (newUser) => {
         }
 
         const create = await User.create(newUser);
-        return create;
+
+        // Generate auth tokens for the newly created user
+        const token = await generateAuthTokens(newUser);
+
+        return { user: create, token };
     } catch (error) {
         let code = error.statusCode;
         if (!code) code = httpStatus.INTERNAL_SERVER_ERROR;
