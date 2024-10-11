@@ -22,10 +22,7 @@ const createUser = async (newUser) => {
 
         const create = await User.create(newUser);
 
-        // Generate auth tokens for the newly created user
-        const token = await generateAuthTokens(newUser);
-
-        return { user: create, token };
+        return create;
     } catch (error) {
         let code = error.statusCode;
         if (!code) code = httpStatus.INTERNAL_SERVER_ERROR;
