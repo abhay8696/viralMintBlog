@@ -1,5 +1,6 @@
 const { User } = require("../models/user.model");
 const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
 
 /**
  * Create a new user
@@ -15,12 +16,15 @@ const createUser = async (newUser) => {
         const isEmailTaken = await User.isEmailTaken(email);
 
         if (isEmailTaken) {
-            return res
-                .status(409)
-                .json({ message: `email: ${email} already taken` });
+            throw new ApiError(httpStatus.CONFLICT, "Email Already Exists.");
         }
-    } catch (err) {
-        return res.status(500).json({ message: "Internal Server Error" });
+
+        const create = await User.create(newUser);
+        return create;
+    } catch (error) {
+        let code = error.statusCode;
+        if (!code) code = httpStatus.INTERNAL_SERVER_ERROR;
+        throw new ApiError(code, error);
     }
 };
 
@@ -34,9 +38,11 @@ const getUserByEmail = async (email) => {
         let getUser = await User.findOne({ email: email });
         if (getUser) return getUser;
 
-        return res.status(404).json({ message: "User not found." });
-    } catch (err) {
-        return res.status(500).json({ message: "Internal Server Error" });
+        throw new ApiError(httpStatus.NOT_FOUND, "User Not Found.");
+    } catch (error) {
+        let code = error.statusCode;
+        if (!code) code = httpStatus.INTERNAL_SERVER_ERROR;
+        throw new ApiError(code, error);
     }
 };
 

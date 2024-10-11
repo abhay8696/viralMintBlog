@@ -1,4 +1,5 @@
 const httpStatus = require("http-status");
+const catchAsync = require("../utils/catchAsync");
 const { userService } = require("../services");
 
 const createUser = catchAsync(async (req, res) => {
@@ -8,7 +9,7 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getUserByEmail = catchAsync(async (req, res) => {
-    const user = await userService.getUserByEmail(req.body.contact);
+    const user = await userService.getUserByEmail(req.body.email);
 
     res.status(httpStatus.OK).send(user);
 });

@@ -4,6 +4,7 @@ const cors = require("cors");
 const httpStatus = require("http-status");
 const helmet = require("helmet");
 const path = require("path");
+const routes = require("./routes");
 
 const app = express();
 
@@ -23,6 +24,6 @@ app.use(compression());
 app.use(cors());
 app.options("*", cors());
 
-// app.use("/v1", routes);
+app.use("/", routes);
 
 module.exports = app;
