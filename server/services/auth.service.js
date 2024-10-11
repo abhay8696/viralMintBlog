@@ -1,6 +1,7 @@
 const httpStatus = require("http-status");
 const userService = require("./user.service");
 const { User } = require("../models/user.model");
+const ApiError = require("../utils/ApiError");
 
 /**
  * Login with email and password
