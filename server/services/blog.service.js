@@ -42,4 +42,18 @@ const getBlog = async (id) => {
     }
 };
 
-module.exports = { createNewBlog, getBlog };
+const getBlogsByLocation = async (location) => {
+    try {
+        let blogs = await Blog.find({ location: location });
+
+        if (!blogs)
+            throw new ApiError(httpStatus.NOT_FOUND, "Blogs Not Found.");
+
+        return blogs;
+    } catch (error) {
+        let code = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
+        throw new ApiError(code, error);
+    }
+};
+
+module.exports = { createNewBlog, getBlog, getBlogsByLocation };
