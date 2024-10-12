@@ -29,4 +29,16 @@ const updateBlog = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send(updatedBlog);
 });
 
-module.exports = { createNewBlog, getBlog, getBlogsByLocation, updateBlog };
+const deleteBlog = catchAsync(async (req, res) => {
+    await blogService.deleteBlog(req.params.id);
+
+    res.status(httpStatus.OK).send({ message: "Blog deleted successfully!" });
+});
+
+module.exports = {
+    createNewBlog,
+    getBlog,
+    getBlogsByLocation,
+    updateBlog,
+    deleteBlog,
+};

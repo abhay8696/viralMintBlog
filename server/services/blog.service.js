@@ -91,4 +91,30 @@ const updateBlog = async (blogId, blogObject) => {
         throw new ApiError(code, error);
     }
 };
-module.exports = { createNewBlog, getBlog, getBlogsByLocation, updateBlog };
+
+/**
+ * Delete Blog
+ *
+ * @param {string} id
+ * @returns {null}
+ * @throws {ApiError}
+ */
+const deleteBlog = async (id) => {
+    try {
+        const result = await Blog.deleteOne({ _id: id });
+        console.log({ result });
+        if (result.deletedCount === 1) return true;
+        else throw new ApiError(httpStatus.NOT_FOUND, `Blog not found`);
+    } catch (error) {
+        let code = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
+        throw new ApiError(code, error);
+    }
+};
+
+module.exports = {
+    createNewBlog,
+    getBlog,
+    getBlogsByLocation,
+    updateBlog,
+    deleteBlog,
+};
