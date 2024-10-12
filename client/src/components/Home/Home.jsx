@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchLocationBlogs } from "../../functions/backendFunctions";
 import BlogComp from "../BlogComp/BlogComp";
@@ -8,24 +8,34 @@ const Home = () => {
     //router
     const navigate = useNavigate();
 
-    useEffect(() => {
-        //redirect to login page if user is not logged in
-        const token = localStorage.getItem("token");
-        if (!token) navigate("/login");
-
-        getBlogs();
-    }, []);
-
-    //functions
-    const getBlogs = async () => {
-        //get location based blogs
+    // Memoized version of getBlogs to prevent unnecessary re-creation
+    const getBlogs = useCallback(async () => {
         const blogsRequest = await fetchLocationBlogs(
             localStorage.getItem("token")
         );
         if (blogsRequest.data) {
             setBlogsList([...blogsRequest.data]);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        //redirect to login page if user is not logged in
+        const token = localStorage.getItem("token");
+        if (!token) navigate("/login");
+
+        getBlogs();
+    }, [getBlogs, navigate]);
+
+    //functions
+    // const getBlogs = async () => {
+    //     //get location based blogs
+    //     const blogsRequest = await fetchLocationBlogs(
+    //         localStorage.getItem("token")
+    //     );
+    //     if (blogsRequest.data) {
+    //         setBlogsList([...blogsRequest.data]);
+    //     }
+    // };
 
     //display all blogs in div
     const displayBlogs = () => {
@@ -37,7 +47,7 @@ const Home = () => {
     return (
         <div className="flex flex-col items-start gap-8">
             <h1>The Blog App</h1>
-            {/* <div className="flex flex-col gap-8">{displayBlogs()}</div> */}
+            <div className="flex flex-col gap-8">{displayBlogs()}</div>
             <Link to="/editor">
                 <div className="text-white font-extrabold fixed bottom-[1rem] right-[1rem] cursor-pointer w-[100px] h-[100px] bg-red-500 flex items-center justify-center rounded-[50%]">
                     New Blog

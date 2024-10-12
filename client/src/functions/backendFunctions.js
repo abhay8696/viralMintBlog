@@ -33,7 +33,7 @@ export const registerUserRequest = async (data) => {
 
 export const fetchLocationBlogs = async (token) => {
     const endPoint = `${serverUrl.VITE_REACT_APP_serverURL}/blog/location`;
-
+    console.log("getting blogs...");
     try {
         const res = await axios.get(endPoint, {
             headers: {
