@@ -1,20 +1,50 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+//backend function
+import { loginRequest } from "../../functions/backendFunctions";
+import { saveToLocal } from "../../functions/helperFunctions";
 
 const Login = () => {
+    //states
     const [data, setData] = useState({
-        name: "",
         email: "",
         password: "",
     });
+
+    //router
+    const navigate = useNavigate();
 
     //functions
     const handleChange = (event) => {
         const { value, name } = event.target;
         setData({ ...data, [name]: value });
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(data);
+        serverRequest();
+    };
+
+    const serverRequest = async () => {
+        try {
+            const loginData = await loginRequest(data.email, data.password);
+            if (loginData.status === 200) {
+                //save user data to localstorage
+                saveToLocal("token", loginData?.data?.tokens?.access?.token);
+                saveToLocal("user", loginData?.data?.user);
+
+                alert("Login Successfull!");
+                navigate("/");
+            }
+        } catch (err) {
+            console.log(err);
+            if (
+                err.message === "Incorrect contact or password" ||
+                err.message === "User Not Found."
+            ) {
+                alert("Incorrect contact or password");
+            } else alert("Internal server error, please try again later");
+        }
     };
 
     return (
