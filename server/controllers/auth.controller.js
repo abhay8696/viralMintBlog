@@ -17,7 +17,10 @@ const login = catchAsync(async (req, res) => {
     // generate token
     const token = await tokenService.generateAuthTokens(findUser);
 
-    res.status(httpStatus.OK).send({ user: findUser, tokens: token });
+    res.status(httpStatus.OK).send({
+        user: findUser,
+        tokens: token,
+    });
 });
 
 module.exports = {

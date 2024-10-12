@@ -33,14 +33,21 @@ const BlogSchema = mongoose.Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now(),
+            default: Date.now,
         },
         updatedAt: {
             type: Date,
-            default: Date.now(),
+            default: Date.now,
         },
     },
     {
         timestamps: true, // Automatically manage createdAt and updatedAt fields
     }
 );
+
+const Blog = mongoose.model("Blog", BlogSchema);
+
+module.exports = {
+    Blog,
+    BlogSchema,
+};
