@@ -32,6 +32,10 @@ const getBlogByIdAndCreator = async (blogId, userId) => {
  * Create a new blog
  */
 const createNewBlog = async (blogData) => {
+    //client send data using EditorJs blocks.
+    if (blogData.editorJs.blocks.length === 0)
+        throw new ApiError(httpStatus.FORBIDDEN, "Post Cannot Be Empty");
+
     try {
         const create = await Blog.create(blogData);
 

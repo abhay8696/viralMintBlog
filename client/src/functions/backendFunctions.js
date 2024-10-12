@@ -47,3 +47,20 @@ export const fetchLocationBlogs = async (token) => {
         );
     }
 };
+
+export const createNewBlogRequest = async (data, token) => {
+    const endPoint = `${serverUrl.VITE_REACT_APP_serverURL}/blog/new`;
+    // console.log({ token, data });
+    try {
+        const res = await axios.post(endPoint, data, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+            },
+        });
+        return res;
+    } catch (err) {
+        throw new Error(
+            err?.response?.data?.message || "Internal Server Error"
+        );
+    }
+};

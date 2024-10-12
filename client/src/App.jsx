@@ -4,6 +4,7 @@ import "./App.css";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
+import BlogEditor from "./components/BlogEditor/BlogEditor";
 
 function App() {
     //functions
@@ -19,6 +20,10 @@ function App() {
         {
             path: "/register",
             element: <Register />,
+        },
+        {
+            path: "/editor",
+            element: <BlogEditor />,
         },
     ]);
     return (

@@ -15,24 +15,19 @@ const BlogSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        title: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        tags: [
-            {
-                type: String,
-            },
-        ],
-        text: {
-            type: String,
-        },
-        imageUrl: {
-            type: String,
-        },
-        videoUrl: {
-            type: String,
+        // title: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        // },
+        // paragraph: {
+        //     type: String,
+        // },
+        // imageUrl: {
+        //     type: String,
+        // },
+        editorJs: {
+            type: Object,
         },
         createdAt: {
             type: Date,

@@ -2,6 +2,7 @@ import React from "react";
 
 const BlogComp = (props) => {
     const { blogData } = props;
+    console.log(blogData);
     return (
         <div className="flex flex-col items-start gap-2">
             <h2 className="text-4xl">{blogData.title}</h2>
