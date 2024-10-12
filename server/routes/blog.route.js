@@ -9,4 +9,6 @@ router.get("/:id", blogController.getBlog);
 
 router.post("/new", blogController.createNewBlog);
 
+router.put("/:id", blogController.updateBlog);
+
 module.exports = router;

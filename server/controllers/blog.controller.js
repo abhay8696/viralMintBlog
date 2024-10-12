@@ -23,4 +23,10 @@ const getBlogsByLocation = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send(blogs);
 });
 
-module.exports = { createNewBlog, getBlog, getBlogsByLocation };
+const updateBlog = catchAsync(async (req, res) => {
+    const updatedBlog = await blogService.updateBlog(req.params.id, req.body);
+
+    res.status(httpStatus.OK).send(updatedBlog);
+});
+
+module.exports = { createNewBlog, getBlog, getBlogsByLocation, updateBlog };

@@ -18,9 +18,7 @@ const createNewBlog = async (blogData) => {
 
 /**
  * Fetches blog for a user
- * - If shop doesn't exist, throw ApiError
- * --- status code  - 404 NOT FOUND
- * --- message - "Shop does not exist"
+ * - If blog doesn't exist, throw ApiError
  * - Else return Blog/All Blogs
  *
  * @param {Blog id}
@@ -42,6 +40,15 @@ const getBlog = async (id) => {
     }
 };
 
+/**
+ * Fetches blog based on user's location/ip
+ * - If blogs doesn't exist, throw ApiError
+ * - Else return Blogs
+ *
+ * @param {Blog id}
+ * @returns {Promise<Shop>}
+ * @throws {ApiError}
+ */
 const getBlogsByLocation = async (location) => {
     try {
         let blogs = await Blog.find({ location: location });
@@ -56,4 +63,32 @@ const getBlogsByLocation = async (location) => {
     }
 };
 
-module.exports = { createNewBlog, getBlog, getBlogsByLocation };
+/**
+ * Updates the blog with new blog object
+ * - If blog doesn't exist, throw ApiError
+ * - Else return updated blog
+ *
+ * @param {BLog} updatedBlog
+ * @param {string} id
+ * @returns {Promise<Shop>}
+ * @throws {ApiError}
+ */
+const updateBlog = async (blogId, blogObject) => {
+    try {
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            blogId,
+            { $set: blogObject },
+            { new: true }
+        );
+
+        if (updatedBlog) {
+            return updatedBlog;
+        } else {
+            throw new ApiError(httpStatus.NOT_FOUND, "BLog not found");
+        }
+    } catch (error) {
+        let code = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
+        throw new ApiError(code, error);
+    }
+};
+module.exports = { createNewBlog, getBlog, getBlogsByLocation, updateBlog };
