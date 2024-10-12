@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const BlogSchema = mongoose.Schema(
     {
-        creator: {
+        creatorId: {
             // Reference to the User model
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", // Refers to the User model
             required: true,
+        },
+        creatorName: {
+            type: String,
         },
         location: {
             type: String,

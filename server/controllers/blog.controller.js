@@ -6,7 +6,8 @@ const createNewBlog = catchAsync(async (req, res) => {
     const create = await blogService.createNewBlog({
         ...req.body,
         location: req.ip, // Set location to client's IP
-        creator: req.user._id, // Set creator to the authenticated user
+        creatorId: req.user._id, // Set creator to the authenticated user
+        creatorName: req.user.name, // Set creator to the authenticated user
     });
 
     res.status(httpStatus.CREATED).send(create);

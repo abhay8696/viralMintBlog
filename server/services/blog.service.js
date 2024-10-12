@@ -16,9 +16,12 @@ const getBlogByIdAndCreator = async (blogId, userId) => {
         throw new ApiError(httpStatus.NOT_FOUND, "Blog not found.");
     }
 
-    console.log({ creator: blog.creator.toString(), user: userId.toString() });
+    console.log({
+        creator: blog.creatorId.toString(),
+        user: userId.toString(),
+    });
 
-    if (blog.creator.toString() !== userId.toString()) {
+    if (blog.creatorId.toString() !== userId.toString()) {
         throw new ApiError(httpStatus.FORBIDDEN, "Unauthorized access.");
     }
 

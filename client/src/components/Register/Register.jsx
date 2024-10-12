@@ -1,22 +1,42 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //styles
 import "./Register.css";
+import { registerUserRequest } from "../../functions/backendFunctions";
 
 const Register = () => {
+    //states
     const [data, setData] = useState({
         name: "",
         email: "",
         password: "",
     });
 
+    //router
+    const navigate = useNavigate();
+
     //functions
+
     const handleChange = (event) => {
         const { value, name } = event.target;
         setData({ ...data, [name]: value });
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(data);
+        serverRequest(data);
+    };
+
+    const serverRequest = async () => {
+        try {
+            const registerData = await registerUserRequest(data);
+            if (registerData.status === 201) {
+                alert("Registration Successfull!");
+                navigate("/login");
+            }
+        } catch (err) {
+            alert(err.message);
+        }
     };
 
     return (
