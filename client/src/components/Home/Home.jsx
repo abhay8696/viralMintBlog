@@ -37,7 +37,7 @@ const Home = () => {
     return (
         <div className="flex flex-col items-start gap-8">
             <h1>The Blog App</h1>
-            <div className="flex flex-col gap-8">{displayBlogs()}</div>
+            {/* <div className="flex flex-col gap-8">{displayBlogs()}</div> */}
             <Link to="/editor">
                 <div className="text-white font-extrabold fixed bottom-[1rem] right-[1rem] cursor-pointer w-[100px] h-[100px] bg-red-500 flex items-center justify-center rounded-[50%]">
                     New Blog
