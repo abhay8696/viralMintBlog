@@ -5,7 +5,8 @@ const { blogService } = require("../services");
 const createNewBlog = catchAsync(async (req, res) => {
     const create = await blogService.createNewBlog({
         ...req.body,
-        location: req.ip,
+        location: req.ip, // Set location to client's IP
+        creator: req.user._id, // Set creator to the authenticated user
     });
 
     res.status(httpStatus.CREATED).send(create);
@@ -24,13 +25,17 @@ const getBlogsByLocation = catchAsync(async (req, res) => {
 });
 
 const updateBlog = catchAsync(async (req, res) => {
-    const updatedBlog = await blogService.updateBlog(req.params.id, req.body);
+    const updatedBlog = await blogService.updateBlog(
+        req.params.id,
+        req.body,
+        req.user._id
+    );
 
     res.status(httpStatus.OK).send(updatedBlog);
 });
 
 const deleteBlog = catchAsync(async (req, res) => {
-    await blogService.deleteBlog(req.params.id);
+    await blogService.deleteBlog(req.params.id, req.user._id);
 
     res.status(httpStatus.OK).send({ message: "Blog deleted successfully!" });
 });

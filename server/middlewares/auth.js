@@ -13,19 +13,13 @@ const { jwtStrategy } = require("../config/passport");
  * --- resolve the promise
  */
 const verifyCallback = (req, resolve, reject) => async (err, user, info) => {
-    if (err) reject(new ApiError(httpStatus.UNAUTHORIZED, "User not found."));
-
-    // console.log({info, user})
-    if (user) {
-        req.user = user;
-        resolve();
-    } else
-        reject(
-            new ApiError(
-                httpStatus.UNAUTHORIZED,
-                "Please authenticate, try logging in again."
-            )
+    if (err || !user) {
+        return reject(
+            new ApiError(httpStatus.UNAUTHORIZED, "Authentication failed.")
         );
+    }
+    req.user = user; // Set authenticated user in request object
+    resolve();
 };
 
 /**

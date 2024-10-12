@@ -3,6 +3,29 @@ const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 
 /**
+ * Fetch blog by ID and ensure the creator matches the requesting user.
+ * @param {string} blogId
+ * @param {string} userId
+ * @returns {Promise<Blog>}
+ * @throws {ApiError}
+ */
+const getBlogByIdAndCreator = async (blogId, userId) => {
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Blog not found.");
+    }
+
+    console.log({ creator: blog.creator.toString(), user: userId.toString() });
+
+    if (blog.creator.toString() !== userId.toString()) {
+        throw new ApiError(httpStatus.FORBIDDEN, "Unauthorized access.");
+    }
+
+    return blog;
+};
+
+/**
  * Create a new blog
  */
 const createNewBlog = async (blogData) => {
@@ -73,7 +96,9 @@ const getBlogsByLocation = async (location) => {
  * @returns {Promise<Shop>}
  * @throws {ApiError}
  */
-const updateBlog = async (blogId, blogObject) => {
+const updateBlog = async (blogId, blogObject, userId) => {
+    await getBlogByIdAndCreator(blogId, userId); //ensure the creator matches the requesting user.
+
     try {
         const updatedBlog = await Blog.findByIdAndUpdate(
             blogId,
@@ -99,7 +124,9 @@ const updateBlog = async (blogId, blogObject) => {
  * @returns {null}
  * @throws {ApiError}
  */
-const deleteBlog = async (id) => {
+const deleteBlog = async (id, userId) => {
+    await getBlogByIdAndCreator(id, userId); //ensure the creator matches the requesting user.
+
     try {
         const result = await Blog.deleteOne({ _id: id });
         console.log({ result });
