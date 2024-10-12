@@ -84,7 +84,7 @@ const updateBlog = async (blogId, blogObject) => {
         if (updatedBlog) {
             return updatedBlog;
         } else {
-            throw new ApiError(httpStatus.NOT_FOUND, "BLog not found");
+            throw new ApiError(httpStatus.NOT_FOUND, "Blog not found");
         }
     } catch (error) {
         let code = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
