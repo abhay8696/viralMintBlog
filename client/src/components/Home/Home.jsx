@@ -39,9 +39,11 @@ const Home = () => {
 
     //display all blogs in div
     const displayBlogs = () => {
-        if (!blogsList.length) return <h2>{"No BLogs Found :("}</h2>;
-        if (blogsList && blogsList.length)
-            return blogsList?.map((blog) => <BlogComp blogData={blog} />);
+        return !blogsList ? (
+            <h2>{"No BLogs Found :("}</h2>
+        ) : (
+            blogsList?.map((blog) => <BlogComp blogData={blog} />)
+        );
     };
 
     return (
