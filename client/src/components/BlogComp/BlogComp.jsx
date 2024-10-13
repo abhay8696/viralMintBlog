@@ -14,6 +14,14 @@ const BlogComp = (props) => {
                 return <h1 key={index}>{item.data.text}</h1>;
             } else if (item.type === "paragraph") {
                 return <p key={index}>{item.data.text}</p>;
+            } else if (item.type === "image") {
+                return (
+                    <img
+                        src={item.data.file.url}
+                        alt="blog image"
+                        key={index}
+                    />
+                );
             }
             return null; // Handle other block types if needed
         });

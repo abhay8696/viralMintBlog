@@ -9,7 +9,7 @@ const routes = require("./routes");
 const app = express();
 
 // set security HTTP headers
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: false }));
 
 // parse json request body
 app.use(express.json());
@@ -23,6 +23,9 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options("*", cors());
+
+// Middleware to serve static files from uploads directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/", routes);
 
