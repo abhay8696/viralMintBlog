@@ -13,6 +13,7 @@ const Home = () => {
         const blogsRequest = await fetchLocationBlogs(
             localStorage.getItem("token")
         );
+        console.log(blogsRequest);
         if (blogsRequest.data) {
             setBlogsList([...blogsRequest.data]);
         }
