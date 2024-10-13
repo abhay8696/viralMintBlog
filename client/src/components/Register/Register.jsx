@@ -40,11 +40,11 @@ const Register = () => {
     };
 
     return (
-        <div className="Register flex flex-col gap-4">
+        <div className="Register flex flex-col items-center justify-center gap-4 h-[100vh]">
             <h2 className="text-3xl">Register</h2>
             <form
                 onSubmit={handleSubmit}
-                className=" flex flex-col p-4 gap-4 w-[500px]"
+                className=" flex flex-col p-4 gap-4 w-[500px]  max-w-[95vw]"
             >
                 <span className="flex flex-col items-start gap-1">
                     <label htmlFor="name">Name</label>

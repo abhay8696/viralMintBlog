@@ -12,5 +12,9 @@ mongoose
     );
 
 app.listen(process.env.PORTT, () => {
-    console.log("Server started on port:", process.env.PORTT);
+    console.log(
+        `Server started on port:`,
+        process.env.PORTT,
+        `\nstarting ${process.env.NODE_ENV} environment`
+    );
 });
