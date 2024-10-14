@@ -85,7 +85,7 @@ const BlogEditor = () => {
     //router
     const navigate = useNavigate();
 
-    const ejInstance = useRef();
+    const ejInstance = useRef(null);
 
     const initEditor = () => {
         console.log("Initializing Editor...");
@@ -121,7 +121,7 @@ const BlogEditor = () => {
         }
 
         return () => {
-            ejInstance?.current?.destroy();
+            // ejInstance?.current?.destroy();
             ejInstance.current = null;
         };
     }, []);
