@@ -88,6 +88,7 @@ const BlogEditor = () => {
     const ejInstance = useRef();
 
     const initEditor = () => {
+        console.log("Initializing Editor...");
         const editor = new EditorJS({
             holder: "editorjs",
             onReady: () => {
@@ -106,12 +107,14 @@ const BlogEditor = () => {
     };
 
     useEffect(() => {
+        console.log("BlogEditor component mounted");
         //redirect to login page if user is not logged in
         const token = localStorage.getItem("token");
         if (!token) navigate("/login");
 
         //launch editorjs
         if (ejInstance.current === null) {
+            console.log("ejInstance is null...");
             initEditor();
             ejInstance.current = true;
         }
