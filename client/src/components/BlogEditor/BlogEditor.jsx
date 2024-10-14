@@ -108,6 +108,7 @@ const BlogEditor = () => {
 
     useEffect(() => {
         console.log("BlogEditor component mounted");
+        console.log("ejInstance ", ejInstance.current);
         //redirect to login page if user is not logged in
         const token = localStorage.getItem("token");
         if (!token) navigate("/login");
